@@ -1,5 +1,7 @@
 package com.thoughtworks.learning;
 
+import com.thoughtworks.learning.core.InputItems;
+import com.thoughtworks.learning.core.InputItemsRepository;
 import com.thoughtworks.learning.core.UsersRepository;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -21,8 +23,9 @@ import java.util.logging.Logger;
 public class App {
 
     private static final URI BASE_URI = URI.create("http://localhost:8080/admin/");
-    public static final String ROOT_PATH = "users";
+  //  public static final String ROOT_PATH = "users";
 
+    public static final String ROOT_PATH = "inputItems";
     public static void main(String[] args) {
         try {
             System.out.println("\"Hello World\" Jersey Example App");
@@ -54,21 +57,22 @@ public class App {
 
     public static ResourceConfig createSessionInViewConfig() throws IOException {
         final ResourceConfig resourceConfig = new ResourceConfig();
-        String resource = "mybatis-config.xml";
+        String resource = "mybatis-config.xml";//还可是url,不一定非得是文件，如果远程，则是url
 
         final Reader reader  = Resources.getResourceAsReader(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader, "test");
         final SqlSessionManager sqlSessionManager = SqlSessionManager.newInstance(sqlSessionFactory);
 
-        final UsersRepository usersRepository = sqlSessionManager.getMapper(UsersRepository.class);
-
+       // final UsersRepository usersRepository = sqlSessionManager.getMapper(UsersRepository.class);
+        final InputItemsRepository inputItemsRepository = sqlSessionManager.getMapper(InputItemsRepository.class);
 
         final ResourceConfig config = new ResourceConfig()
                 .packages("com.thoughtworks.learning")
                 .register(new AbstractBinder() {
                     @Override
                     protected void configure() {
-                        bind(usersRepository).to(UsersRepository.class);
+                       // bind(usersRepository).to(UsersRepository.class);
+                        bind(inputItemsRepository).to(InputItemsRepository.class);
                         bind(sqlSessionManager).to(SqlSessionManager.class);
                     }
                 });
@@ -85,12 +89,13 @@ public class App {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader, "test");
 
         SqlSession session = sqlSessionFactory.openSession();
-        final UsersRepository usersRepository = session.getMapper(UsersRepository.class);
-
+      //  final UsersRepository usersRepository = session.getMapper(UsersRepository.class);
+        final InputItemsRepository inputItemsRepository= session.getMapper(InputItemsRepository.class);
         resourceConfig.register(new AbstractBinder() {
             @Override
             protected void configure() {
-                bind(usersRepository).to(UsersRepository.class);
+              //  bind(usersRepository).to(UsersRepository.class);
+                bind(inputItemsRepository).to(InputItemsRepository.class);
             }
         }).packages("com.thoughtworks.learning.api");
 

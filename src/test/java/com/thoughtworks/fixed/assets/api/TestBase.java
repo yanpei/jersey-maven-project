@@ -1,6 +1,7 @@
 package com.thoughtworks.fixed.assets.api;
 
 
+import com.thoughtworks.learning.core.InputItemsRepository;
 import com.thoughtworks.learning.core.UsersRepository;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -14,7 +15,7 @@ import static org.mockito.Mockito.mock;
 
 public class TestBase extends JerseyTest {
     protected UsersRepository usersRepository = mock(UsersRepository.class);
-
+    protected InputItemsRepository inputItemsRepository = mock(InputItemsRepository.class);
     @Override
     protected Application configure() {
         
@@ -29,6 +30,7 @@ public class TestBase extends JerseyTest {
             protected void configure() {
 
                 bind(usersRepository).to(UsersRepository.class);
+                bind(inputItemsRepository).to(InputItemsRepository.class);
 
 
             }

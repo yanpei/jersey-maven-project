@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.thoughtworks.learning.core.B_1_1_Repository" >
+
+    <resultMap id="b_1_1_Mapper" type="B_1_1">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+    </resultMap>
+
+    <select id="findAll" resultMap="b_1_1_Mapper">
+        select * from B_1_1;
+    </select>
+
+    <select id="getItem_ById" resultMap="b_1_1_Mapper">
+    select * from B_1_1  where id = #{id};
+    </select>
+
+    <update id="updateEntity">
+    update B_1_1 set NAME =#{name} WHERE ID=#{id};
+    </update>
+
+    <delete id="deleteItem">
+    delete from B_1_1 where id = #{id};
+    </delete>
+
+    <insert id="createEntity">
+    insert into B_1_1(ID,NAME) values(#{id},#{name});
+    </insert>
+
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.thoughtworks.learning.core.A_1_N_Repository" >
+
+    <resultMap id="a_1_N_Mapper" type="A_1_N">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <collection  property="b_s" javaType="ArrayList" column="id" ofType="B_1_N" select="select_Bs_FromB_1_N" >
+        </collection>
+    </resultMap>
+
+    <select id="select_Bs_FromB_1_N" resultType="B_1_N" >
+        select  * from B_1_N where a_id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="a_1_N_Mapper">
+        select * from A_1_N;
+    </select>
+
+    <select id="getItem_ById" resultType="A_1_N" >
+        select  * from A_1_N where id = #{id}
+    </select>
+
+    <insert id="createEntity">
+        insert into A_1_N(ID,NAME) values(#{id},#{name});
+    </insert>
+
+    <update id="updateEntity">
+        update A_1_N set NAME =#{name} WHERE ID=#{id};
+    </update>
+
+    <delete id="deleteItem">
+        delete from A_1_N where id = #{id};
+    </delete>
+
+</mapper>

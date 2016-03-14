@@ -42,5 +42,10 @@
     <mappers>
         <mapper resource="user.xml"/>
         <mapper resource="group.xml"/>
+        <mapper resource="inputItems.xml"/>
+        <mapper resource="a_1_1.xml"/>
+        <mapper resource="b_1_1.xml"/>
+        <mapper resource="a_1_N.xml"/>
+        <mapper resource="a_n_n.xml"/>
     </mappers>
 </configuration>

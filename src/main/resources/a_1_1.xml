@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.thoughtworks.learning.core.A_1_1_Repository" >
+
+    <resultMap id="a_1_1_Mapper" type="A_1_1">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <association  property="b"  javaType="B_1_1"  column="id" select="select_B_FromB_1_1" >
+        </association>
+    </resultMap>
+
+    <select id="findAll" resultMap="a_1_1_Mapper">
+        select * from A_1_1;
+    </select>
+
+    <select id="getItem_ById" resultMap="a_1_1_Mapper">
+        select * from A_1_1  where id = #{id};
+    </select>
+
+    <select id="select_B_FromB_1_1" resultType="B_1_1" >
+        select  * from B_1_1 b,A_1_1 a where a.id = #{id} and b.id = a.b_id;
+    </select>
+
+    <insert id="create">
+        insert into A_1_1(ID,NAME,b_id) values(#{id},#{name},#{b.id});
+    </insert>
+
+    <!--<insert id="createEntity">-->
+        <!--insert into A_1_1(ID,NAME) values(#{id},#{name});-->
+    <!--</insert>-->
+
+    <!--<insert id="createEntityAndRelationship">-->
+        <!--insert into A_1_1(ID,NAME,b_id) values(#{id},#{name},#{b_id});-->
+    <!--</insert>-->
+
+
+    <update id="update" parameterType="A_1_1">
+        update A_1_1 set NAME=#{name},B_ID=#{b.id}  WHERE ID=#{id};
+    </update>
+
+    <!--<update id="createRelationship_A_B">-->
+        <!--update A_1_1 set B_ID=#{b_id} WHERE ID=#{id};-->
+    <!--</update>-->
+
+    <!--<update id="updateRelationship">-->
+        <!--update A_1_1 set B_ID=#{b_id} WHERE ID=#{id};-->
+    <!--</update>-->
+
+
+
+    <!--<update id="updateEntityAndRelationship">-->
+        <!--update A_1_1 set NAME =#{name},B_ID=#{b_id} WHERE ID=#{id};-->
+    <!--</update>-->
+
+    <!--<update id="deleteRelationship">-->
+        <!--update A_1_1 set B_ID=NULL where id=#{id};-->
+    <!--</update>-->
+    <!---->
+    
+    <delete id="deleteItem">
+        delete from A_1_1 where id = #{id};
+    </delete>
+
+</mapper>
