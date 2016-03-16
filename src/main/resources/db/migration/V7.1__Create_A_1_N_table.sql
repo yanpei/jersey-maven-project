@@ -3,3 +3,9 @@ create TABLE A_1_N(
     NAME VARCHAR(200),
     PRIMARY KEY (ID)
 );
+
+create TABLE A_1_N_Cascade(
+    ID int not null,
+    NAME VARCHAR(200),
+    PRIMARY KEY (ID)
+);

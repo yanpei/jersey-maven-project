@@ -11,43 +11,80 @@
         <id property="id" column="id" />
         <result property="name" column="name" />
         <collection  property="bs" javaType="ArrayList" column="id" ofType="B_N_N" select="select_Bs_FromB_N_N" >
+
         </collection>
     </resultMap>
 
     <select id="findAll" resultMap="a_n_n_Mapper">
-        select * from A_N_N;
+        select * from A_N_N_Cascade;
     </select>
 
     <select id="getItem_ById" resultMap="a_n_n_Mapper">
-        select * from A_N_N  where id = #{id};
+        select * from A_N_N_Cascade  where id = #{id};
     </select>
 
     <select id="select_Bs_FromB_N_N" resultType="B_N_N" >
-        select  b.id,b.name from A_N_N a,B_N_N b,R_N_N r where a.id = r.a_id and b.id = r.b_id and r.a_id = #{id}
+        select  b.id,b.name from A_N_N_Cascade a,B_N_N_Cascade b,R_N_N_Cascade r where a.id = r.a_id and b.id = r.b_id and r.a_id = #{id}
     </select>
 
     <insert id="createEntity">
-        insert into A_N_N(ID,NAME) values(#{id},#{name});
+        insert into A_N_N_Cascade(ID,NAME) values(#{id},#{name});
     </insert>
 
     <insert id="createRelationship_A_B">
-        insert into  R_N_N (A_ID,B_ID)  VALUES(#{a.id},#{b.id});
+        insert into  R_N_N_Cascade (A_ID,B_ID)  VALUES(#{a.id},#{b.id});
     </insert>
 
     <update id="updateEntity">
-        update A_N_N set NAME =#{name} WHERE ID=#{id};
+        update A_N_N_Cascade set ID=#{a_new.id}, NAME =#{a_new.name} WHERE ID=#{a_old.id};
     </update>
 
     <update id="updateRelationship">
-      update R_N_N set B_ID=#{b_id_new} WHERE A_ID=#{a_id} and b_id = #{b_id_old} ;
+        update R_N_N_Cascade set B_ID=#{b_new.id} WHERE A_ID=#{a.id} and b_id = #{b_old.id} ;
     </update>
 
     <delete id="deleteRelationship">
-        delete from R_N_N where  A_ID = #{a_id} and B_ID=#{b_id};
+        delete from R_N_N_Cascade where  A_ID = #{a.id} and B_ID=#{b.id};
     </delete>
 
     <delete id="deleteItem">
-        delete from A_N_N where id = #{id};
+        delete from A_N_N_Cascade where id = #{id};
     </delete>
+
+    <!--<select id="findAll" resultMap="a_n_n_Mapper">-->
+        <!--select * from A_N_N;-->
+    <!--</select>-->
+
+    <!--<select id="getItem_ById" resultMap="a_n_n_Mapper">-->
+        <!--select * from A_N_N  where id = #{id};-->
+    <!--</select>-->
+
+    <!--<select id="select_Bs_FromB_N_N" resultType="B_N_N" >-->
+        <!--select  b.id,b.name from A_N_N a,B_N_N b,R_N_N r where a.id = r.a_id and b.id = r.b_id and r.a_id = #{id}-->
+    <!--</select>-->
+
+    <!--<insert id="createEntity">-->
+        <!--insert into A_N_N(ID,NAME) values(#{id},#{name});-->
+    <!--</insert>-->
+
+    <!--<insert id="createRelationship_A_B">-->
+        <!--insert into  R_N_N (A_ID,B_ID)  VALUES(#{a.id},#{b.id});-->
+    <!--</insert>-->
+
+    <!--<update id="updateEntity">-->
+        <!--update A_N_N set NAME =#{name} WHERE ID=#{id};-->
+    <!--</update>-->
+
+    <!--<update id="updateRelationship">-->
+      <!--update R_N_N set B_ID=#{b_new.id} WHERE A_ID=#{a.id} and b_id = #{b_old.id} ;-->
+    <!--</update>-->
+
+    <!--<delete id="deleteRelationship">-->
+        <!--delete from R_N_N where  A_ID = #{a.id} and B_ID=#{b.id};-->
+    <!--</delete>-->
+
+    <!--<delete id="deleteItem">-->
+        <!--delete from A_N_N where id = #{id};-->
+    <!--</delete>-->
 
 </mapper>

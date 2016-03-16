@@ -10,8 +10,6 @@ import java.util.Map;
  */
 public interface A_1_1_Repository {
 
-    B_1_1   select_B_FromB_1_1(int id);
-
     List<A_1_1> findAll();
 
     A_1_1 getItem_ById(int id);
@@ -19,10 +17,9 @@ public interface A_1_1_Repository {
 //传对象
     void  create(A_1_1 a);
 
-    void  createEntityAndRelationship(A_1_1 a);
+ //   void  createEntityAndRelationship(A_1_1 a);
 
-    void  update(A_1_1 a);
-
+    void  update( A_1_1 a);
 
     void  deleteItem(A_1_1 a);
 

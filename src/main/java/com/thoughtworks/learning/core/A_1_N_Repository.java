@@ -9,21 +9,19 @@ import java.util.List;
  */
 public interface A_1_N_Repository {
 
-    List<B_1_N>   select_Bs_FromB_1_N(int id);
-
     List<A_1_N> findAll();
 
     A_1_N getItem_ById(int id);
 
     void  createEntity(A_1_N a);
 
-    void  updateEntity(A_1_N a);
+    void  updateEntity(@Param("a_old") A_1_N a_old,@Param("a_new") A_1_N a_new);
 
     void  deleteItem(A_1_N a);
 
 
 
-
+//传参数
 //    void  createEntity(@Param("id") int id, @Param("name") String name);
 
 //    void  updateEntity(@Param("id") int id,@Param("name") String name);

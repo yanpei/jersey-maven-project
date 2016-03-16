@@ -6,9 +6,8 @@ package com.thoughtworks.learning.core;
 public class B_1_N {
     private int id;
     private  String name;
+    private A_1_N a;
 
-
-    private  int a_id;
 
     public int getId() {
         return id;
@@ -18,8 +17,12 @@ public class B_1_N {
         return name;
     }
 
-    public int getA_id() {
-        return a_id;
+
+    public A_1_N getA() {
+        return a;
     }
 
+    public void setA(A_1_N a) {
+        this.a = a;
+    }
 }

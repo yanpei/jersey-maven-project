@@ -28,7 +28,7 @@ public class A_1_N {
     }
 
 
-    public List<B_1_N> getB_1_ns() {
+    public List<B_1_N> getB_s() {
         return b_s;
     }
 

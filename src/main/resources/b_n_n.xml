@@ -5,38 +5,38 @@
 
 
 
-<mapper namespace="com.thoughtworks.learning.core.A_1_1_Repository" >
+<mapper namespace="com.thoughtworks.learning.core.B_N_N_Repository" >
 
-    <resultMap id="a_1_1_Mapper" type="A_1_1">
+    <resultMap id="b_n_n_Mapper" type="B_N_N">
         <id property="id" column="id" />
         <result property="name" column="name" />
-        <association  property="b"  javaType="B_1_1"  column="id" select="select_B_FromB_1_1" >
-        </association>
+        <collection  property="a"  javaType="ArrayList" ofType="A_N_N"  column="id" select="select_A_FromA_N_N" >
+        </collection>
     </resultMap>
 
 <!--级联-->
 
-    <select id="findAll" resultMap="a_1_1_Mapper">
-        select * from A_1_1_Cascade;
+    <select id="findAll" resultMap="b_n_n_Mapper">
+        select * from B_N_N_Cascade;
     </select>
-    <select id="getItem_ById" resultMap="a_1_1_Mapper">
-        select * from A_1_1_Cascade  where id = #{id};
+    <select id="getItem_ById" resultMap="b_n_n_Mapper">
+        select * from B_N_N_Cascade  where id = #{id};
     </select>
-    <select id="select_B_FromB_1_1" resultType="B_1_1" >
-        select  * from B_1_1_Cascade b,A_1_1_Cascade a where a.id = #{id} and b.id = a.b_id;
+    <select id="select_A_FromA_N_N" resultType="A_N_N" >
+        select  a.id,a.name from A_N_N_Cascade a,B_N_N_Cascade b,R_N_N_Cascade r where a.id = r.a_id and b.id = r.b_id and r.b_id = #{id};
     </select>
 
-    <insert id="create">
-        insert into A_1_1_Cascade(ID,NAME,b_id) values(#{id},#{name},#{b.id});
-    </insert>
+    <!--<insert id="create">-->
+        <!--insert into A_1_1_Cascade(ID,NAME,b_id) values(#{id},#{name},#{b.id});-->
+    <!--</insert>-->
 
-    <update id="update" parameterType="A_1_1">
-        update A_1_1_Cascade set ID=#{id},NAME=#{name},B_ID=#{b.id}  WHERE ID=#{id};
-    </update>
+    <!--<update id="update" parameterType="A_1_1">-->
+        <!--update A_1_1_Cascade set NAME=#{name},B_ID=#{b.id}  WHERE ID=#{id};-->
+    <!--</update>-->
 
-    <delete id="deleteItem">
-        delete from A_1_1_Cascade where id = #{id};
-    </delete>
+    <!--<delete id="deleteItem">-->
+        <!--delete from A_1_1_Cascade where id = #{id};-->
+    <!--</delete>-->
 
 
 <!--非级联-->

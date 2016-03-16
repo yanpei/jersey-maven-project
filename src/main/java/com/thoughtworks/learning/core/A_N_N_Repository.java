@@ -9,8 +9,6 @@ import java.util.List;
  */
 public interface A_N_N_Repository {
 
-    List<B_N_N>   select_Bs_FromB_N_N(int id);
-
     List<A_N_N> findAll();
 
     A_N_N getItem_ById(int id);
@@ -18,15 +16,13 @@ public interface A_N_N_Repository {
 //传对象
     void  createEntity(A_N_N a);
 
-    void  createRelationship_A_B(@Param("a") A_N_N a,@Param("b") B_N_N b);
-//
-//    void  createEntityAndRelationship(@Param("id") int id,@Param("name") String name,@Param("b_id") int b_id);
+    void  createRelationship_A_B(@Param("a") A_N_N a, @Param("b") B_N_N b);
 
-    void  updateEntity(A_N_N a);
+    void  updateEntity(@Param("a_old") A_N_N a_old,@Param("a_new") A_N_N a_new);
 
-    void  updateRelationship(@Param("a") A_N_N a,@Param("b") B_N_N b);
+    void  updateRelationship(@Param("a") A_N_N a,@Param("b_old") B_N_N b_old,@Param("b_new") B_N_N b_new);
 
-     void  deleteRelationship(@Param("a") A_N_N a,@Param("b") B_N_N b);
+    void  deleteRelationship(@Param("a") A_N_N a,@Param("b") B_N_N b);
 
     void  deleteItem(A_N_N a);
 

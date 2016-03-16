@@ -1,7 +1,6 @@
 package com.thoughtworks.fixed.assets.api;
 
-import com.thoughtworks.learning.core.B_1_1;
-import com.thoughtworks.learning.core.B_1_1_Repository;
+import com.thoughtworks.learning.core.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -26,6 +25,7 @@ public class B_1_1_RepositoryTest {
     private SqlSessionFactory sqlSessionFactory;
     private B_1_1_Repository b_1_1_repository;
     private SqlSession session;
+    private A_1_1_Repository a_1_1_repository;
 
     @Before
     public void setUp() throws IOException, SQLException {
@@ -38,6 +38,7 @@ public class B_1_1_RepositoryTest {
         session = sqlSessionFactory.openSession();
         session.getConnection().setAutoCommit(false);   //测试不会向数据库提交数据
         b_1_1_repository = session.getMapper(B_1_1_Repository.class);
+        a_1_1_repository = session.getMapper(A_1_1_Repository.class);
 
     }
 
@@ -48,6 +49,12 @@ public class B_1_1_RepositoryTest {
 
     }
 
+    @Test
+    public void should_select_Bs_FromB_1_N() {
+        B_1_1 b = b_1_1_repository.getItem_ById(1);
+        A_1_1 item1 = b.getA();
+        assertThat(item1.getName(),is("Tom"));
+    }
 
     @Test
     public void should_find_all_items() {
@@ -66,44 +73,61 @@ public class B_1_1_RepositoryTest {
         assertThat((String) b_1_1.getName(), is("P1"));
     }
 
-
-//    @Test
-//    public void should_get_item_b_a_by_id() {
-//        B_1_1 b_1_1 = b_1_1_repository.getItem_ById(1);
-//        assertThat(b_1_1.getId(), is(1));
-//        assertThat((String) b_1_1.getName(), is("P1"));
-//    }
-
-
     @Test
-    public void should_delete_Item(){
-
-        b_1_1_repository.deleteItem(2);
-        B_1_1 b_1_1 = b_1_1_repository.getItem_ById(2);
-        assertNull(b_1_1);
-    }
-
-    @Test
-    public void should_update_entity(){
-
-        b_1_1_repository.updateEntity(2,"P4");
-        B_1_1 b_1_1 = b_1_1_repository.getItem_ById(2);
-        assertThat((Integer) b_1_1.getId(), is(2));
-        assertThat((String) b_1_1.getName(), is("P4"));
-    }
-
-
-    @Test
-    public void should_create_a_itemEntity(){
-
-        b_1_1_repository.createEntity(4,"P4");
+    public void given_new_B_when_create_a_itemEntity_then_insert_B(){
+        B_1_1 b = new B_1_1(4,"P4");
+        b_1_1_repository.createEntity(b);
         B_1_1 b_1_1 = b_1_1_repository.getItem_ById(4);
         assertThat((Integer) b_1_1.getId(), is(4));
         assertThat((String) b_1_1.getName(), is("P4"));
 
     }
 
+    @Test
+    public void given_newName_when_update_entity_then_updateName(){
+        B_1_1 b_old = new B_1_1(3,"P3");
+        B_1_1 b_new = new B_1_1(3,"P4");
+        b_1_1_repository.updateEntity(b_old,b_new);
+        B_1_1 b_1_1 = b_1_1_repository.getItem_ById(3);
+        assertThat((Integer) b_1_1.getId(), is(3));
+        assertThat((String) b_1_1.getName(), is("P4"));
+    }
 
+//级联更新ID
+    @Test
+    public void given_newID_when_update_entity_then_B_update_ID_A_update_B_ID(){
+        B_1_1 b_old = new B_1_1(2,"P2");
+        B_1_1 b_new = new B_1_1(4,"P4");
+        b_1_1_repository.updateEntity(b_old,b_new);
+        B_1_1 b_1_1 = b_1_1_repository.getItem_ById(4);
+        assertThat((Integer) b_1_1.getId(), is(4));
+        assertThat((String) b_1_1.getName(), is("P4"));
+
+        A_1_1 a = a_1_1_repository.getItem_ById(2);
+        assertThat((Integer)a.getB().getId(),is(4));
+    }
+
+    public void given_B_A_NotExist_when_delete_B_then_delete_B(){
+        B_1_1 b = new B_1_1(2,"P2");
+        b_1_1_repository.deleteItem(b);
+        B_1_1 b_1_1 = b_1_1_repository.getItem_ById(2);
+        assertNull(b_1_1);
+    }
+
+//级联删除
+    @Test
+    public void given_B_when_delete_B_then_delete_B_delete_A(){
+
+        B_1_1 b_del = new B_1_1(2,"P2");
+        b_1_1_repository.deleteItem(b_del);
+        B_1_1 b = b_1_1_repository.getItem_ById(2);
+        assertNull(b);
+        A_1_1 a = a_1_1_repository.getItem_ById(2);
+        assertNull(a);
+      //  System.out.print(a.getId());
+     //   System.out.print(a.getB());
+
+    }
 
 
 }

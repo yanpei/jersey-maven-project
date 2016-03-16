@@ -14,28 +14,53 @@
         </collection>
     </resultMap>
 
+<!--级联-->
     <select id="select_Bs_FromB_1_N" resultType="B_1_N" >
-        select  * from B_1_N where a_id = #{id}
+        select  * from B_1_N_Cascade where a_id = #{id}
     </select>
 
     <select id="findAll" resultMap="a_1_N_Mapper">
-        select * from A_1_N;
+        select * from A_1_N_Cascade;
     </select>
 
-    <select id="getItem_ById" resultType="A_1_N" >
-        select  * from A_1_N where id = #{id}
+    <select id="getItem_ById" resultMap="a_1_N_Mapper" >
+        select  * from A_1_N_Cascade where id = #{id}
     </select>
 
     <insert id="createEntity">
-        insert into A_1_N(ID,NAME) values(#{id},#{name});
+        insert into A_1_N_Cascade(ID,NAME) values(#{id},#{name});
     </insert>
 
     <update id="updateEntity">
-        update A_1_N set NAME =#{name} WHERE ID=#{id};
+        update A_1_N_Cascade set ID=#{a_new.id}, NAME =#{a_new.name} WHERE ID=#{a_old.id};
     </update>
 
     <delete id="deleteItem">
-        delete from A_1_N where id = #{id};
+        delete from A_1_N_Cascade where id = #{id};
     </delete>
+
+    <!--<select id="select_Bs_FromB_1_N" resultType="B_1_N" >-->
+        <!--select  * from B_1_N where a_id = #{id}-->
+    <!--</select>-->
+
+    <!--<select id="findAll" resultMap="a_1_N_Mapper">-->
+        <!--select * from A_1_N;-->
+    <!--</select>-->
+
+    <!--<select id="getItem_ById" resultMap="a_1_N_Mapper" >-->
+        <!--select  * from A_1_N where id = #{id}-->
+    <!--</select>-->
+
+    <!--<insert id="createEntity">-->
+        <!--insert into A_1_N(ID,NAME) values(#{id},#{name});-->
+    <!--</insert>-->
+
+    <!--<update id="updateEntity">-->
+        <!--update A_1_N set NAME =#{name} WHERE ID=#{id};-->
+    <!--</update>-->
+
+    <!--<delete id="deleteItem">-->
+        <!--delete from A_1_N where id = #{id};-->
+    <!--</delete>-->
 
 </mapper>

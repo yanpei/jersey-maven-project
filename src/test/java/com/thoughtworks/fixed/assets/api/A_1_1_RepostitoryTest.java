@@ -53,7 +53,8 @@ public class A_1_1_RepostitoryTest {
 
     @Test
     public void should_select_Bs_FromB_1_N() {
-        B_1_1 item1 = a_1_1_repository.select_B_FromB_1_1(1);
+        A_1_1 a = a_1_1_repository.getItem_ById(1);
+        B_1_1 item1 = a.getB();
         assertThat(item1.getId(),is(1));
         assertThat(item1.getName(),is("P1"));
     }
@@ -92,7 +93,7 @@ public class A_1_1_RepostitoryTest {
 
 
     @Test
-    public void should_create_a_itemEntity_andd_realtionship(){
+    public void should_create_a_itemEntity_and_realtionship(){
         B_1_1 b = new B_1_1(3,"P3");
         A_1_1 a = new A_1_1(4,"Jack",b);
         a_1_1_repository.create(a);
@@ -102,15 +103,7 @@ public class A_1_1_RepostitoryTest {
         assertThat((Integer) a1.getB().getId(), is(3));
     }
 
-    @Test
-    public void should_update_entity(){
-        A_1_1 a = new A_1_1(2,"Jack");
 
-        a_1_1_repository.update(a);
-        A_1_1 a1 = a_1_1_repository.getItem_ById(2);
-        assertThat((Integer) a1.getId(), is(2));
-        assertThat((String) a1.getName(), is("Jack"));
-    }
 
     @Test
     public void should_create_a_relationship_A_B(){
@@ -124,6 +117,17 @@ public class A_1_1_RepostitoryTest {
 
         assertThat(a1.getB().getId(),is(3));
     }
+
+    @Test
+    public void should_update_entity(){
+        A_1_1 a = new A_1_1(2,"Jack");
+
+        a_1_1_repository.update(a);
+        A_1_1 a1 = a_1_1_repository.getItem_ById(2);
+        assertThat((Integer) a1.getId(), is(2));
+        assertThat((String) a1.getName(), is("Jack"));
+    }
+
 
     @Test
     public void should_update_relationship(){

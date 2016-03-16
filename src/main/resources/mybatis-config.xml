@@ -47,5 +47,10 @@
         <mapper resource="b_1_1.xml"/>
         <mapper resource="a_1_N.xml"/>
         <mapper resource="a_n_n.xml"/>
+
+        <mapper resource="b_1_n.xml"/>
+        <mapper resource="b_n_n.xml"/>
+        <!--<mapper resource="a_1_1_cascade.xml"/>-->
+        <!--<mapper resource="b_1_1_cascade.xml"/>-->
     </mappers>
 </configuration>

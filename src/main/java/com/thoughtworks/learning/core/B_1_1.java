@@ -6,12 +6,13 @@ package com.thoughtworks.learning.core;
 public class B_1_1 {
     private int id;
     private String name;
+    private A_1_1 a;
 
     public  B_1_1(){
 
     }
 
-    public B_1_1(int id,String name){
+    public B_1_1(int id, String name){
         this.id = id;
         this.name = name;
     }
@@ -28,4 +29,15 @@ public class B_1_1 {
         this.name = name;
     }
 
+    public A_1_1 getA() {
+        return a;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setA(A_1_1 a) {
+        this.a = a;
+    }
 }
